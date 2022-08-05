@@ -4,6 +4,6 @@ Implementation of semantic cosine similarity from the paper: https://www.researc
 
 ### To-Do List
 [x] - Dimension Equalization
-[] - Check for Hypernym Hyponym Pair
-[] - Check for Synonym Pairs
-[] - Recalibrate Dimension Values
+[ ] - Check for Hypernym Hyponym Pair
+[ ] - Check for Synonym Pairs
+[ ] - Recalibrate Dimension Values
