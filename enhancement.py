@@ -80,9 +80,9 @@ class Enhancement:
 
         return L
 
-    def replaceWords(self):
+    def replaceSynonyms(self):
         """
-        Replace words in the two strings
+        Replace words with their synonyms in the two strings
         """
 
         for i in range(len(self.s1)):
@@ -99,6 +99,54 @@ class Enhancement:
             else:
                 self.s1[self.s1.index(self.getSynonym(self.s2[i])[0])] = self.s2[i]
 
+    # Synonym Part done
+
+    # Finding and replacing Hypernym
+
+    def getHypernym(self, word):
+
+        # Finding Hypernym using NLTK and adding all the hypernyms which are present in self.s1 and self.s2 to a list
+        def hypernym(word):
+            from nltk.corpus import wordnet as wn
+            hypernyms = []
+            for syn in wn.synsets(word):
+                for hypernym in syn.hypernyms():
+                    hypernyms.append(hypernym.name().split('.')[0])
+            return hypernyms
+
+        L = []
+        L_hypernyms = [x.replace(' ', '') for x in hypernym(word)]
+
+        for i in L_hypernyms:
+            if i not in self.s1 and i not in self.s2:
+                continue
+            else:
+                L.append(i)
+
+        return L
+
+    def replaceHypernyms(self):
+        """
+        Replace words with their hypernyms in the two strings
+        """
+
+        for i in range(len(self.s1)):
+
+            if self.getHypernym(self.s1[i]) == []:
+                continue
+            else:
+                self.s2[self.s2.index(self.getHypernym(self.s1[i])[0])] = self.s1[i]
+
+        for i in range(len(self.s2)):
+
+            if self.getHypernym(self.s2[i]) == []:
+                continue
+            else:
+                self.s1[self.s1.index(self.getHypernym(self.s2[i])[0])] = self.s2[i]
+
+        return self.s1, self.s2
+
+
     # Norm to find the vector of the work/string
     def norm(self, s):
         return np.sqrt(np.sum((self.data_dict[s]**2)))
@@ -109,7 +157,8 @@ class Enhancement:
         """
 
         self.dictionaryInitializer()
-        self.replaceWords()
+        self.replaceSynonyms()
+        self.replaceHypernyms()
         # Dimension equalization
         self.dimensionEqualization()
 
@@ -142,7 +191,11 @@ class Enhancement:
         return numerator / denominator
 
 
-obj = Enhancement('This desk is not stupid', 'This table is stupid')
+string1 = input("Enter the first string: ")
+string2 = input("Enter the second string: ")
+
+obj = Enhancement(string1, string2)
 print(obj.cosine_similarity())
-# print(obj.replaceWords())
+# print(obj.replaceSynonyms())
+# print(obj.replaceHypernyms())
 
