@@ -142,7 +142,32 @@ class Enhancement:
             if self.getHypernym(self.s2[i]) == []:
                 continue
             else:
-                self.s1[self.s1.index(self.getHypernym(self.s2[i])[0])] = self.s2[i]
+                hyp = self.getHypernym(self.s2[i])[0]
+                ind = self.s1.index(hyp)
+                self.s1[ind]= self.s2[i]
+
+        return self.s1, self.s2
+
+    def recalibrateHypernyms(self):
+
+        # self.dictionaryInitializer()
+
+        for i in range(len(self.s1)):
+
+            try:
+
+                if type(self.s1[i]) is tuple:
+                    hyp = self.getHypernym(self.s1[i][0])[0]
+                else:
+                    hyp = self.getHypernym(self.s1[i])[0]
+
+                ind = self.s2.index(hyp)
+                self.s2[ind]= self.norm(self.getHypernym(self.s1[i])[0]) * self.norm(self.s1[i])
+
+
+                # self.s2[self.s2.index(self.getHypernym(self.s1[i])[0])] = self.norm(self.getHypernym(self.s1[i])[0]) * self.norm(self.s1[i])
+            except IndexError:
+                continue
 
         return self.s1, self.s2
 
@@ -158,9 +183,10 @@ class Enhancement:
 
         self.dictionaryInitializer()
         self.replaceSynonyms()
-        self.replaceHypernyms()
+        # self.replaceHypernyms()
         # Dimension equalization
         self.dimensionEqualization()
+        self.recalibrateHypernyms()
 
         print("New values of s1 and s2: \n", self.s1, "\n", self.s2)
 
@@ -181,7 +207,9 @@ class Enhancement:
             else:
                 denominator1 += self.norm(self.s1[i])**2
 
-            if type(self.s2[i]) is tuple:
+            if type(self.s2[i]) is float:
+                denominator2 += self.s2[i]**2
+            elif type(self.s2[i]) is tuple:
                 denominator2 += self.norm(self.s2[i][0])**2
             else:
                 denominator2 += self.norm(self.s2[i])**2
@@ -191,11 +219,14 @@ class Enhancement:
         return numerator / denominator
 
 
-string1 = input("Enter the first string: ")
-string2 = input("Enter the second string: ")
+# string1 = input("Enter the first string: ")
+# string2 = input("Enter the second string: ")
+
+string1 = "cat mouse tom jerry"
+string2 = "rodent jerry"
 
 obj = Enhancement(string1, string2)
 print(obj.cosine_similarity())
 # print(obj.replaceSynonyms())
 # print(obj.replaceHypernyms())
-
+# print(obj.recalibrateHypernyms())

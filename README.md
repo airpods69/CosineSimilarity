@@ -8,6 +8,7 @@ Implementation of semantic cosine similarity from the paper: https://www.researc
 - [x] - Check for Synonym Pairs and replace it
 - [ ] - Recalibrate Dimension Values
 - [ ] - Fix IndexError when strings are of different length
+- [ ] - Fix The error caused by recalibrating and dimension Equalization
 
 #### How does Synonym Pair work?
 For finding the Synonyms, I approached the solution by going through https://thesaurus.com for finding synoyms then, picking up only the relevant ones which are needed and present in s1
