@@ -41,6 +41,9 @@ class Enhancement:
 
         for i in range(len(self.s2)):
 
+            if type(self.s2[i]) is float:
+                continue
+
             if self.s2[i] not in self.s1:
                 self.s1.insert(i, (self.s2[i], 0))
 
@@ -157,7 +160,7 @@ class Enhancement:
             try:
 
                 if type(self.s1[i]) is tuple:
-                    hyp = self.getHypernym(self.s1[i][0])[0]
+                    continue
                 else:
                     hyp = self.getHypernym(self.s1[i])[0]
 
@@ -182,7 +185,7 @@ class Enhancement:
         """
 
         self.dictionaryInitializer()
-        self.replaceSynonyms()
+        # self.replaceSynonyms()
         # self.replaceHypernyms()
         # Dimension equalization
         self.dimensionEqualization()
@@ -207,7 +210,9 @@ class Enhancement:
             else:
                 denominator1 += self.norm(self.s1[i])**2
 
-            if type(self.s2[i]) is float:
+            print("type of {} is {}".format(self.s2[i],type(self.s2[i])))
+
+            if type(self.s2[i]) is np.float64:
                 denominator2 += self.s2[i]**2
             elif type(self.s2[i]) is tuple:
                 denominator2 += self.norm(self.s2[i][0])**2
