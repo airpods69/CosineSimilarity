@@ -1,13 +1,12 @@
+from typing import List
+
 # Dimension equalization
 # Create an vector of equal dimensions for the given two strings
 
-def equalizeDimensions(string1, string2):
+def equalizeDimensions(string1: List, string2: List):
     """
     Create an vector of equal dimensions for the given two strings
     """
-
-    string1 = string1.split()
-    string2 = string2.split()
 
     if len(string1) > len(string2):
         """

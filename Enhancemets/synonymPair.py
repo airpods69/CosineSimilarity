@@ -22,7 +22,6 @@ def getSynonyms(string1: List, string2: List):
     for i in string1:
 
         syms = synonymPair(i)
-        print("Synonyms for " + i + ": " + str(syms))
 
         for j in range(len(string2)):
             # Loop through elements of string2 to check if it exists in the synonyms list
