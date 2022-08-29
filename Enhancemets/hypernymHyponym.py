@@ -17,9 +17,21 @@ def hypernyms(word):
 
     hypernymsList = []
     for syn in syns:
-        hypernymsList.append(syn.hypernyms()[0].name())
+        try:
+            hypernymsList.append(syn.hypernyms()[0].name())
+        except:
+            continue
 
-    return [hypernyms.split('.')[0] for hypernyms in hypernymsList]
+
+    new_hypernyms = []
+
+    for hypernyms in hypernymsList:
+        try:
+            new_hypernyms.append(hypernyms.split('.')[0])
+        except:
+            continue
+
+    return new_hypernyms
 
 
 def addHypernyms(string1: List, string2: List):
@@ -44,7 +56,7 @@ def addHypernyms(string1: List, string2: List):
 
     return string1, string2
 
-string1 = "Your cat is pretty"
-string2 = "Your feline is nice"
+# string1 = "cat"
+# string2 = "Your feline is nice"
 
-print(addHypernyms(string1.split(), string2.split()))
+# print(addHypernyms(string1.split(), string2.split()))
